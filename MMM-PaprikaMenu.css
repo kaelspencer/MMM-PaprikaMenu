@@ -1,0 +1,7 @@
+.MMM-PaprikaMenu * {
+  box-sizing: border-box;
+}
+
+.MMM-PaprikaMenu .module-content {
+  width: 300px;
+}
