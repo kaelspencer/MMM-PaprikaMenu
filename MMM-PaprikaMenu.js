@@ -49,12 +49,13 @@ Module.register("MMM-PaprikaMenu", {
         var self = this;
         setInterval(function() {
             self.getData();
-        }, this.config.updateInterval * 60 * 1000); //convert to milliseconds
+        }, this.config.updateInterval * 1000); //convert to milliseconds
 
-        this.updateDom(1);
+        this.getData();
     },
 
     getData: function() {
+        console.log("MMM-PaprikaMenu: getData, sending notification");
         this.sendSocketNotification("PAPRIKA_MENU_GET", {
             user: this.config.user,
             pass: this.config.pass,
@@ -63,21 +64,11 @@ Module.register("MMM-PaprikaMenu", {
     },
 
     socketNotificationReceived: function(notification, payload) {
-        if (notification == "DARK_SKY_FORECAST_DATA" && payload.instanceId == this.identifier) {
-            //clear animated icon cache
-            if (this.config.useAnimatedIcons) {
-                this.clearIcons();
-            }
-
-            //process weather data
+        console.log("MMM-PaprikaMenu: socketNotificationReceived (" + notification + ")");
+        if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
-            this.weatherData = payload;
-            this.formattedWeatherData = this.processWeatherData();
 
-            this.updateDom(this.config.updateFadeSpeed);
-
-            //broadcast weather update
-            this.sendNotification("DARK_SKY_FORECAST_WEATHER_UPDATE", payload);
+            this.updateDom(500);
         }
     },
 

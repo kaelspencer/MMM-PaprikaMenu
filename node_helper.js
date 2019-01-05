@@ -3,13 +3,15 @@ var request = require("request");
 var moment = require("moment");
 
 module.exports = NodeHelper.create({
-  start: function() {
-    console.log("Starting node_helper for module [" + this.name + "]");
-  },
+    start: function() {
+        console.log("Starting node_helper for module [" + this.name + "]");
+    },
 
-  socketNotificationReceived: function(notification, payload){
-    if (notification === "PAPRIKA_MENU_GET") {
-      var self = this;
+    socketNotificationReceived: function(notification, payload){
+        if (notification === "PAPRIKA_MENU_GET") {
+            var self = this;
+            resp = { instanceId: payload.instanceId };
+            self.sendSocketNotification("PAPRIKA_MENU_DATA", resp);
 
       // if (payload.apikey == null || payload.apikey == "") {
       //   console.log( "[MMM-DarkSkyForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No API key configured. Get an API key at https://darksky.net" );
@@ -40,8 +42,7 @@ module.exports = NodeHelper.create({
       //     }
 
       //   });
-
       // }
-    }
-  },
+        }
+    },
 });
