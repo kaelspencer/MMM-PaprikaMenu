@@ -21,6 +21,10 @@ Module.register("MMM-PaprikaMenu", {
        return ["MMM-PaprikaMenu.css"];
     },
 
+    getTemplate: function () {
+        return "MMM-PaprikaMenu.njk";
+    },
+
     /*
     Data object provided to the Nunjucks template. The template does not
     do any data minipulation; the strings provided here are displayed as-is.
@@ -55,7 +59,6 @@ Module.register("MMM-PaprikaMenu", {
     },
 
     getData: function() {
-        console.log("MMM-PaprikaMenu: getData, sending notification");
         this.sendSocketNotification("PAPRIKA_MENU_GET", {
             user: this.config.user,
             pass: this.config.pass,
@@ -64,7 +67,6 @@ Module.register("MMM-PaprikaMenu", {
     },
 
     socketNotificationReceived: function(notification, payload) {
-        console.log("MMM-PaprikaMenu: socketNotificationReceived (" + notification + ")");
         if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
 
