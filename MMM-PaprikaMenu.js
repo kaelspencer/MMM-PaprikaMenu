@@ -8,9 +8,10 @@ Module.register("MMM-PaprikaMenu", {
     requiresVersion: "2.2.0",
 
     defaults: {
-        user: "",
-        pass: "",
-        updateInterval: 10
+        email: "",
+        passwoord: "",
+        updateInterval: 30,
+        updateFadeSpeed: 500
     },
 
     getScripts: function() {
@@ -39,7 +40,7 @@ Module.register("MMM-PaprikaMenu", {
             },
             loading: this.formattedMenuData == null ? true : false,
             config: this.config,
-            forecast: this.formattedMenuData,
+            menu: this.formattedMenuData,
             identifier: this.identifier,
             timeStamp: this.dataRefreshTimeStamp
         };
@@ -51,17 +52,17 @@ Module.register("MMM-PaprikaMenu", {
         this.formattedMenuData = null;
 
         var self = this;
-        setInterval(function() {
-            self.getData();
-        }, this.config.updateInterval * 1000); //convert to milliseconds
+        // setInterval(function() {
+        //     self.getData();
+        // }, this.config.updateInterval * 60 * 1000); // Convert minutes to milliseconds
 
         this.getData();
     },
 
     getData: function() {
         this.sendSocketNotification("PAPRIKA_MENU_GET", {
-            user: this.config.user,
-            pass: this.config.pass,
+            email: this.config.email,
+            password: this.config.password,
             instanceId: this.identifier
         });
     },
@@ -69,9 +70,39 @@ Module.register("MMM-PaprikaMenu", {
     socketNotificationReceived: function(notification, payload) {
         if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
+            console.log(payload);
 
-            this.updateDom(500);
+            this.formattedMenuData = this.filterMenu(payload.meals);
+
+            // this.formattedMenuData = {
+            //     items: [
+            //         { title: "Fish tacos" },
+            //         { title: "Chili & cornbread" }
+            //     ]
+            // };
+
+            this.updateDom(this.config.updateFadeSpeed);
         }
     },
 
+    filterMenu: function(raw) {
+        // raw is array of:
+        // { uid: '8d95f33c-2fb9-4c1a-814f-b64fe9e50bca',
+        //   type_uid: null,
+        //   order_flag: 45,
+        //   recipe_uid: null,
+        //   date: '2018-12-16 00:00:00',
+        //   type: 2,
+        //   name: 'Breakfast quesadilla' }
+
+        // menuItems = [];
+
+        // raw.forEach(function(item) {
+        //     menuItems.push({
+
+        //     });
+        // });
+
+        return { items: raw };
+    }
 })

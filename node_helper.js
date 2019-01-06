@@ -1,48 +1,37 @@
 var NodeHelper = require("node_helper");
-var request = require("request");
+var PaprikaApi = require("paprika-api");
+console.log(PaprikaApi);
 var moment = require("moment");
 
 module.exports = NodeHelper.create({
     start: function() {
         console.log("Starting node_helper for module [" + this.name + "]");
+        this.paprikaApi = null;
     },
 
     socketNotificationReceived: function(notification, payload){
         if (notification === "PAPRIKA_MENU_GET") {
-            var self = this;
-            resp = { instanceId: payload.instanceId };
-            self.sendSocketNotification("PAPRIKA_MENU_DATA", resp);
+            if (payload.email == null || payload.email == "") {
+                console.log( "[MMM-PaprikaMenu] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No email set." );
+            }
+            else if (payload.password == null || payload.password == "") {
+                console.log( "[MMM-PaprikaMenu] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No password set." );
+            }
+            else {
+                if (this.paprikaApi == null) {
+                    this.paprikaApi = new PaprikaApi.PaprikaApi(payload.email, payload.password);
+                }
 
-      // if (payload.apikey == null || payload.apikey == "") {
-      //   console.log( "[MMM-DarkSkyForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No API key configured. Get an API key at https://darksky.net" );
-      // } else if (payload.latitude == null || payload.latitude == "" || payload.longitude == null || payload.longitude == "") {
-      //   console.log( "[MMM-DarkSkyForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** Latitude and/or longitude not provided." );
-      // } else {
+                var self = this;
 
-      //   //make request to Dark Sky API
-      //   var url = "https://api.darksky.net/forecast/" +
-      //     payload.apikey + "/" +
-      //     payload.latitude + "," + payload.longitude +
-      //     "?units=" + payload.units +
-      //     "&lang=" + payload.language;
-      //     // "&exclude=minutely"
-
-      //   // console.log("[MMM-DarkSkyForecast] Getting data: " + url);
-      //   request({url: url, method: "GET"}, function( error, response, body) {
-
-      //     if(!error && response.statusCode == 200) {
-
-      //       //Good response
-      //       var resp = JSON.parse(body);
-      //       resp.instanceId = payload.instanceId;
-      //       self.sendSocketNotification("DARK_SKY_FORECAST_DATA", resp);
-
-      //     } else {
-      //       console.log( "[MMM-DarkSkyForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** " + error );
-      //     }
-
-      //   });
-      // }
+                this.paprikaApi.meals().then((meals) => {
+                    resp = {
+                        instanceId: payload.instanceId,
+                        meals: meals
+                    };
+                    self.sendSocketNotification("PAPRIKA_MENU_DATA", resp);
+                });
+            }
         }
     },
 });
