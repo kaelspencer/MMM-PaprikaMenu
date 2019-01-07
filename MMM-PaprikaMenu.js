@@ -10,6 +10,7 @@ Module.register("MMM-PaprikaMenu", {
     defaults: {
         email: "",
         passwoord: "",
+        weekStartsOnSunday: false,
         updateInterval: 30,
         updateFadeSpeed: 500
     },
@@ -70,17 +71,10 @@ Module.register("MMM-PaprikaMenu", {
     socketNotificationReceived: function(notification, payload) {
         if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
-            console.log(payload);
 
             this.formattedMenuData = this.filterMenu(payload.meals);
 
-            // this.formattedMenuData = {
-            //     items: [
-            //         { title: "Fish tacos" },
-            //         { title: "Chili & cornbread" }
-            //     ]
-            // };
-
+            console.log(this.formattedMenuData);
             this.updateDom(this.config.updateFadeSpeed);
         }
     },
@@ -95,14 +89,40 @@ Module.register("MMM-PaprikaMenu", {
         //   type: 2,
         //   name: 'Breakfast quesadilla' }
 
-        // menuItems = [];
+        menuItems = [];
+        var startOfWeek = this.getFirstDayOfWeek();
+        var nextWeek = startOfWeek.clone().add(7, 'days');
 
-        // raw.forEach(function(item) {
-        //     menuItems.push({
+        console.log('Week starts: ' + startOfWeek.format('YYYY-MM-DD') + ', next week starts: ' + nextWeek.format('YYYY-MM-DD'));
 
-        //     });
-        // });
+        raw.forEach(function(item) {
+            var itemDate = moment(item.date);
+            if (!(itemDate.isBefore(startOfWeek) || itemDate.isAfter(nextWeek))) {
+                menuItems.push(item);
+            }
+        });
 
-        return { items: raw };
-    }
+        return { items: menuItems };
+    },
+
+    getFirstDayOfWeek: function() {
+        var today = moment();
+        var firstDayOfWeek = moment();
+
+        // moment.isoWeekday() returns 1 for Monday, 7 for Sunday.
+        if (this.config.weekStartsOnSunday) {
+            var weekday = today.isoWeekday();
+
+            if (weekday == 7) {
+                firstDayOfWeek = today;
+            } else {
+                firstDayOfWeek = today.subtract(weekday, 'days');
+            }
+        } else {
+            var weekStartedDaysAgo = today.isoWeekday() - 1;
+            firstDayOfWeek = today.subtract(weekStartedDaysAgo, 'days');
+        }
+
+        return firstDayOfWeek.startOf('day');
+    },
 })

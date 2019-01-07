@@ -1,6 +1,5 @@
 var NodeHelper = require("node_helper");
 var PaprikaApi = require("paprika-api");
-console.log(PaprikaApi);
 var moment = require("moment");
 
 module.exports = NodeHelper.create({
@@ -13,11 +12,9 @@ module.exports = NodeHelper.create({
         if (notification === "PAPRIKA_MENU_GET") {
             if (payload.email == null || payload.email == "") {
                 console.log( "[MMM-PaprikaMenu] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No email set." );
-            }
-            else if (payload.password == null || payload.password == "") {
+            } else if (payload.password == null || payload.password == "") {
                 console.log( "[MMM-PaprikaMenu] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No password set." );
-            }
-            else {
+            } else {
                 if (this.paprikaApi == null) {
                     this.paprikaApi = new PaprikaApi.PaprikaApi(payload.email, payload.password);
                 }
