@@ -73,7 +73,7 @@ Module.register("MMM-PaprikaMenu", {
         if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
 
-            this.formattedMenuData = { items: payload.meals };
+            this.formattedMenuData = { meals: payload.meals };
 
             console.log(this.formattedMenuData);
             this.updateDom(this.config.updateFadeSpeed);
