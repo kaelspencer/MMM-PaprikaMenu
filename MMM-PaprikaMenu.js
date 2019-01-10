@@ -11,6 +11,7 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         passwoord: "",
         weekStartsOnSunday: false,
+        dateFormat: "ddd Do",
         updateInterval: 30,
         updateFadeSpeed: 500
     },
@@ -73,10 +74,25 @@ Module.register("MMM-PaprikaMenu", {
         if (notification == "PAPRIKA_MENU_DATA" && payload.instanceId == this.identifier) {
             this.dataRefreshTimeStamp = moment().format("x");
 
-            this.formattedMenuData = { meals: payload.meals };
+            this.formattedMenuData = { meals: this.formatMeals(payload.meals) };
 
             console.log(this.formattedMenuData);
             this.updateDom(this.config.updateFadeSpeed);
         }
+    },
+
+    formatMeals: function(meals) {
+        // Sort by date, ascending.
+        meals.sort(function(a, b) { return (moment(a.date).isBefore(b.date) ? -1 : 1); });
+
+        var formatted = [];
+        for (var m of meals) {
+            formatted.push({
+                name: m.name,
+                date: moment(m.date).format(this.config.dateFormat)
+            });
+        }
+
+        return formatted;
     },
 })
