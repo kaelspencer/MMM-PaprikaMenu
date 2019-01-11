@@ -1,0 +1,21 @@
+<div class="wrapper">
+
+  {% if loading %}
+
+    <div class="dimmed light small">{{ phrases.loading | safe }}</div>
+
+  {% else %}
+
+    <div class="menu">
+      {% for m in menu.meals %}
+        <div class="menu-item">
+          <span class="time">{{ m.date }}</span>
+          <span class="meal">{{ m.name }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="meta-timestamp" id="{{ moduleTimestampIdPrefix + identifier }}" data-timestamp="{{ timeStamp }}"></div>
+  {% endif %}
+
+</div>

@@ -1,0 +1,65 @@
+.MMM-PaprikaMenu * {
+  box-sizing: border-box;
+}
+
+.MMM-PaprikaMenu .module-content {
+  width: 300px;
+}
+
+.MMM-PaprikaMenu .wrapper .menu {
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 17px;
+  line-height: 1;
+  border-bottom: solid 1px #222;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .menu-item,
+.MMM-PaprikaMenu .wrapper .menu .header-row {
+  display: table-row;
+  border-top: solid 1px #222;
+}
+
+/*.MMM-PaprikaMenu .wrapper.with-forecast-header.table .menu > div:first-child,*/
+.MMM-PaprikaMenu .wrapper .menu > div:first-child,
+.MMM-PaprikaMenu .wrapper .menu .header-row {
+  border-top: none;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .header-row .date-time-header {
+  text-align: left;
+  overflow: visible;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .menu-item > span,
+.MMM-PaprikaMenu .wrapper .menu .header-row > span {
+  display: table-cell;
+  font-size: 17px;
+  text-align: center;
+  vertical-align: middle;
+  height: 40px;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .header-row > span {
+  height: 32px;
+  font-size: 14px;
+  text-transform: uppercase;
+  vertical-align: bottom;
+  padding-bottom: 2px;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .menu-item > span:first-child {
+  text-align: left;
+}
+.MMM-PaprikaMenu .wrapper .menu .menu-item > span:last-child {
+  text-align: right;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .menu-item .time {
+  white-space: nowrap;
+}
+
+.MMM-PaprikaMenu .wrapper .menu .menu-item .meal {
+  font-size: 14px;
+}
