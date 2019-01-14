@@ -11,8 +11,9 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         passwoord: "",
         weekStartsOnSunday: false,
+        showPictures: true,
         dateFormat: "ddd Do",
-        updateInterval: 30,
+        updateInterval: 60,
         updateFadeSpeed: 500
     },
 
@@ -54,9 +55,9 @@ Module.register("MMM-PaprikaMenu", {
         this.formattedMenuData = null;
 
         var self = this;
-        // setInterval(function() {
-        //     self.getData();
-        // }, this.config.updateInterval * 60 * 1000); // Convert minutes to milliseconds
+        setInterval(function() {
+            self.getData();
+        }, this.config.updateInterval * 60 * 1000); // Convert minutes to milliseconds
 
         this.getData();
     },
@@ -89,7 +90,8 @@ Module.register("MMM-PaprikaMenu", {
         for (var m of meals) {
             formatted.push({
                 name: m.name,
-                date: moment(m.date).format(this.config.dateFormat)
+                date: moment(m.date).format(this.config.dateFormat),
+                photo_url: m.photo_url
             });
         }
 
