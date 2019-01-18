@@ -12,7 +12,7 @@ Module.register("MMM-PaprikaMenu", {
         passwoord: "",
         weekStartsOnSunday: false,
         showPictures: true,
-        dateFormat: "ddd Do",
+        dateFormat: "dddd",
         updateInterval: 60,
         updateFadeSpeed: 500
     },
