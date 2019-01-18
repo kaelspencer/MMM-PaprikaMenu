@@ -4,23 +4,36 @@
 
 {% else %}
 
-  <div class="menu">
-    <div {% if config.showPictures %} class="show-pictures" {% endif %}>
-      {% for m in menu.meals %}
-        <div class="menu-item">
-          {% if config.showPictures %}
-            {% if m.photo_url %}
-              <span class="img"><img width="30px" src="{{ m.photo_url }}" /></span>
+  <table class="menu">
+    {% for m in menu.meals %}
+      <tr>
+        <td>
+          <span class="img-cell">
+            {% if config.showPictures and m.photo_url %}
+                <img src="{{ m.photo_url }}" />
             {% else %}
-              <span>&nbsp;</span>
+              &nbsp;
             {% endif %}
-          {% endif %}
-          <span class="meal">{{ m.name }}</span>
-          <span class="date">{{ m.date }}</span>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
+          </span>
+        </td>
+
+        <td>
+          <table>
+            <tr>
+              <td>
+                <span class="meal">{{ m.name }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="date">{{ m.date }}</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
 
   <div class="meta-timestamp" id="{{ moduleTimestampIdPrefix + identifier }}" data-timestamp="{{ timeStamp }}"></div>
 {% endif %}

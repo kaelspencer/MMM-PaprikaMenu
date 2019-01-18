@@ -6,49 +6,43 @@
   width: 500px;
 }
 
-.MMM-PaprikaMenu .menu {
-  display: table;
-  border-collapse: collapse;
-  width: 100%;
+.MMM-PaprikaMenu table.menu {
   font-size: 24px;
   line-height: 1;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.MMM-PaprikaMenu table.menu tr {
   border-bottom: solid 1px #222;
 }
 
-.MMM-PaprikaMenu .menu .menu-item {
-  display: table-row;
-  border-top: solid 1px #222;
+.MMM-PaprikaMenu table.menu > tbody > tr > td:first-child {
+  width: 55px;
   height: 55px;
 }
 
-.MMM-PaprikaMenu .menu > div:first-child {
-  border-top: none;
+.MMM-PaprikaMenu .menu .img-cell > img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  margin: 5px;
 }
 
-.MMM-PaprikaMenu .menu .menu-item > span {
-  display: table-cell;
+.MMM-PaprikaMenu .menu > span {
   text-align: left;
 }
 
-.MMM-PaprikaMenu .menu .menu-item .meal {
+.MMM-PaprikaMenu .menu .meal {
   color: #FFF;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.MMM-PaprikaMenu .menu .menu-item .date {
+.MMM-PaprikaMenu .menu .date {
   white-space: nowrap;
   font-size: 17px;
   margin-top: 5px;
 }
-
-.MMM-PaprikaMenu .menu .menu-item .img > img {
-  margin-top: 5px;
-  margin-left: 5px;
-}
-/*
-.MMM-PaprikaMenu .menu .show-pictures .menu-item .meal,
-.MMM-PaprikaMenu .menu .show-pictures .menu-item .date {
-  margin-left: 30px;
-}*/
