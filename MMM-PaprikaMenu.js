@@ -18,6 +18,7 @@ Module.register("MMM-PaprikaMenu", {
         dinnerDisplay: "Dinner",
         snackDisplay: "Snack",
         dateMealSeperator: " - ",
+        mealSortOrder: [0, 1, 2, 3],
         updateInterval: 60,
         updateFadeSpeed: 500
     },
@@ -59,6 +60,18 @@ Module.register("MMM-PaprikaMenu", {
 
         this.formattedMenuData = null;
 
+        // Validate mealSortOrder.
+        if (!(
+            Array.isArray(this.config.mealSortOrder) &&
+            this.config.mealSortOrder.length == 4 &&
+            this.config.mealSortOrder.includes(0) &&
+            this.config.mealSortOrder.includes(1) &&
+            this.config.mealSortOrder.includes(2) &&
+            this.config.mealSortOrder.includes(3))) {
+            Log.error("mealSortOrder should be an array of four elements. 0, 1, 2, 3 should appear exactly once in the desired sort order.");
+            return;
+        }
+
         var self = this;
         setInterval(function() {
             self.getData();
@@ -88,8 +101,16 @@ Module.register("MMM-PaprikaMenu", {
     },
 
     formatMeals: function(meals) {
-        // Sort by date, ascending.
-        meals.sort(function(a, b) { return (moment(a.date).isBefore(b.date) ? -1 : 1); });
+        // Sort by date, ascending, then by meal type, a user defined order.
+        var mealSortOrder = this.config.mealSortOrder;
+        meals.sort(function(a, b) {
+            if (moment(a.date).isSame(b.date)) {
+                // Same date, sort by type.
+                return mealSortOrder.indexOf(a.type) - mealSortOrder.indexOf(b.type);
+            } else {
+                return (moment(a.date).isBefore(b.date) ? -1 : 1);
+            }
+        });
         today = moment().startOf('day');
 
         var formatted = [];
