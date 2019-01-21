@@ -13,6 +13,11 @@ Module.register("MMM-PaprikaMenu", {
         weekStartsOnSunday: false,
         showPictures: true,
         dateFormat: "dddd",
+        breakfastDisplay: "Breakfast",
+        lunchDisplay: "Lunch",
+        dinnerDisplay: "Dinner",
+        snackDisplay: "Snack",
+        dateMealSeperator: " - ",
         updateInterval: 60,
         updateFadeSpeed: 500
     },
@@ -92,6 +97,7 @@ Module.register("MMM-PaprikaMenu", {
             formatted.push({
                 name: m.name,
                 date: moment(m.date).format(this.config.dateFormat),
+                meal: this.typeToMealDisplay(m.type),
                 photo_url: m.photo_url,
                 is_today: today.isSame(m.date)
             });
@@ -99,4 +105,19 @@ Module.register("MMM-PaprikaMenu", {
 
         return formatted;
     },
+
+    typeToMealDisplay: function(type) {
+        switch (type) {
+            case 0:
+                return this.config.breakfastDisplay;
+            case 1:
+                return this.config.lunchDisplay;
+            case 2:
+                return this.config.dinnerDisplay;
+            case 3:
+                return this.config.snackDisplay;
+            default:
+                return "Unknown meal type"
+        }
+    }
 })
