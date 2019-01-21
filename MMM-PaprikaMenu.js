@@ -11,8 +11,15 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         passwoord: "",
         weekStartsOnSunday: false,
-        dateFormat: "ddd Do",
-        updateInterval: 30,
+        showPictures: true,
+        dateFormat: "dddd",
+        breakfastDisplay: "Breakfast",
+        lunchDisplay: "Lunch",
+        dinnerDisplay: "Dinner",
+        snackDisplay: "Snack",
+        dateMealSeperator: " - ",
+        mealSortOrder: [0, 1, 2, 3],
+        updateInterval: 60,
         updateFadeSpeed: 500
     },
 
@@ -53,10 +60,22 @@ Module.register("MMM-PaprikaMenu", {
 
         this.formattedMenuData = null;
 
+        // Validate mealSortOrder.
+        if (!(
+            Array.isArray(this.config.mealSortOrder) &&
+            this.config.mealSortOrder.length == 4 &&
+            this.config.mealSortOrder.includes(0) &&
+            this.config.mealSortOrder.includes(1) &&
+            this.config.mealSortOrder.includes(2) &&
+            this.config.mealSortOrder.includes(3))) {
+            Log.error("mealSortOrder should be an array of four elements. 0, 1, 2, 3 should appear exactly once in the desired sort order.");
+            return;
+        }
+
         var self = this;
-        // setInterval(function() {
-        //     self.getData();
-        // }, this.config.updateInterval * 60 * 1000); // Convert minutes to milliseconds
+        setInterval(function() {
+            self.getData();
+        }, this.config.updateInterval * 60 * 1000); // Convert minutes to milliseconds
 
         this.getData();
     },
@@ -82,17 +101,44 @@ Module.register("MMM-PaprikaMenu", {
     },
 
     formatMeals: function(meals) {
-        // Sort by date, ascending.
-        meals.sort(function(a, b) { return (moment(a.date).isBefore(b.date) ? -1 : 1); });
+        // Sort by date, ascending, then by meal type, a user defined order.
+        var mealSortOrder = this.config.mealSortOrder;
+        meals.sort(function(a, b) {
+            if (moment(a.date).isSame(b.date)) {
+                // Same date, sort by type.
+                return mealSortOrder.indexOf(a.type) - mealSortOrder.indexOf(b.type);
+            } else {
+                return (moment(a.date).isBefore(b.date) ? -1 : 1);
+            }
+        });
+        today = moment().startOf('day');
 
         var formatted = [];
         for (var m of meals) {
             formatted.push({
                 name: m.name,
-                date: moment(m.date).format(this.config.dateFormat)
+                date: moment(m.date).format(this.config.dateFormat),
+                meal: this.typeToMealDisplay(m.type),
+                photo_url: m.photo_url,
+                is_today: today.isSame(m.date)
             });
         }
 
         return formatted;
     },
+
+    typeToMealDisplay: function(type) {
+        switch (type) {
+            case 0:
+                return this.config.breakfastDisplay;
+            case 1:
+                return this.config.lunchDisplay;
+            case 2:
+                return this.config.dinnerDisplay;
+            case 3:
+                return this.config.snackDisplay;
+            default:
+                return "Unknown meal type"
+        }
+    }
 })
