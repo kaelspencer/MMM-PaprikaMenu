@@ -7,7 +7,7 @@
 }
 
 .MMM-PaprikaMenu table.menu {
-  font-size: 24px;
+  font-size: 17px;
   line-height: 1;
   border-collapse: collapse;
   table-layout: fixed;
@@ -37,16 +37,24 @@
 
 .MMM-PaprikaMenu .menu > span {
   text-align: left;
+  white-space: nowrap;
 }
 
 .MMM-PaprikaMenu .menu .date {
-  white-space: nowrap;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .MMM-PaprikaMenu .menu .meal {
-  color: #FFF;
-  white-space: nowrap;
+  font-size: 17px;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.MMM-PaprikaMenu .menu .today .date {
+  font-size: 17px;
+}
+
+.MMM-PaprikaMenu .menu .today .meal {
+  color: #FFF;
+  font-size: 24px;
 }

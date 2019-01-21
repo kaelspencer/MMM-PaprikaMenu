@@ -85,13 +85,15 @@ Module.register("MMM-PaprikaMenu", {
     formatMeals: function(meals) {
         // Sort by date, ascending.
         meals.sort(function(a, b) { return (moment(a.date).isBefore(b.date) ? -1 : 1); });
+        today = moment().startOf('day');
 
         var formatted = [];
         for (var m of meals) {
             formatted.push({
                 name: m.name,
                 date: moment(m.date).format(this.config.dateFormat),
-                photo_url: m.photo_url
+                photo_url: m.photo_url,
+                is_today: today.isSame(m.date)
             });
         }
 
