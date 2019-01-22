@@ -11,6 +11,7 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         passwoord: "",
         weekStartsOnSunday: false,
+        fadePriorEntries: true,
         showPictures: true,
         roundPictureCorners: false,
         dateFormat: "dddd",
@@ -114,7 +115,8 @@ Module.register("MMM-PaprikaMenu", {
                 date: moment(m.date).format(this.config.dateFormat),
                 meal: this.typeToMealDisplay(m.type),
                 photo_url: m.photo_url,
-                is_today: today.isSame(m.date)
+                is_today: today.isSame(m.date),
+                should_fade: this.config.fadePriorEntries && today.isAfter(m.date)
             });
         }
 

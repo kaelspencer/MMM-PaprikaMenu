@@ -6,7 +6,7 @@
 
   <table class="menu">
     {% for m in menu.meals %}
-      <tr {% if m.is_today %}class="today"{% endif %}>
+      <tr {% if m.is_today %}class="today"{% elif m.should_fade %}class="fade"{% endif %}>
         {% if config.showPictures %}
           <td>
             <span class="img-cell">

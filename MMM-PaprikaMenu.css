@@ -18,6 +18,10 @@
   border-bottom: solid 1px #222;
 }
 
+.MMM-PaprikaMenu table.menu tr.fade {
+  opacity: 0.33;
+}
+
 .MMM-PaprikaMenu table.menu > tbody > tr > td:first-child {
   width: 55px;
   height: 55px;
