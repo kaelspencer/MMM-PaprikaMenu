@@ -7,6 +7,8 @@ This is a module for [MagicMirror](https://github.com/MichMich/MagicMirror/). It
 2. cd into `MMM-PaprikaMenu` and run `npm install`
 
 # Config
+At a minimum, you need a Paprika cloud sync account. Provide that email and password in the config.
+
 |Option|Description|
 |:--|:--|
 |email              |**REQUIRED**<br>The email user account for Paprika<br><br>Type: *string*|
@@ -25,7 +27,7 @@ This is a module for [MagicMirror](https://github.com/MichMich/MagicMirror/). It
 |updateInterval     |How often, in minutes, to query Paprika.<br><br>Type: `int`<br>Default: `60` minutes|
 |updateFadeSpeed    |How quickly to fade out and back in the module upon update.<br><br>Type: `int`<br>Default: `500`|
 
-Here is an example of an entry in `config.js`
+Here is an example of an entry in `config.js`. Take note of `snackDisplay` and `mealSortOrder`. Here, we use the snack entries as a reminder of things we need to do to prepare for future meals, e.g., thaw meat. `snackDisplay` changes what appears, and `mealSortOrder` moves the snack entries to the top of the list for that day.
 ```
 {
     module: "MMM-PaprikaMenu",
