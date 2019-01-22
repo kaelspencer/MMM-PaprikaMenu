@@ -20,8 +20,8 @@ This is a module for [MagicMirror](https://github.com/MichMich/MagicMirror/). It
 |lunchDisplay       |Paprika has a meal type where 1 corresponds to "Lunch". You can change the word that is displayed.<br><br>Type: `string`<br>Default: `"Lunch"`|
 |dinnerDisplay      |Paprika has a meal type where 2 corresponds to "Dinner". You can change the word that is displayed.<br><br>Type: `string`<br>Default: `"Dinner"`|
 |snackDisplay       |Paprika has a meal type where 3 corresponds to "Snack". You can change the word that is displayed.<br><br>Type: `string`<br>Default: `"Snack"`|
-|dateMealSeperator  |Above each menu item, the date and meal type are display. For example, by default y`ou'll see "Tuesday - Dinner". This setting controls the characters separating `dateFormat` and the meal display.<br><br>Type: `string`<br>Default: `" - "`|
-|mealSortOrder      |The default s`ort order is breakfast (0), lunch (1), dinner (2), and lunch (3). You can change this sort order. For example, if you want dinner first: [2, 0, 1, 3]. Note: each number 0-3 must appear exactly once in the array.<br><br>Type: `array of int`| <br>Default: `[0, 1, 2, 3`]
+|dateMealSeperator  |Above each menu item, the date and meal type are display. For example, by default you'll see "Tuesday - Dinner". This setting controls the characters separating `dateFormat` and the meal display.<br><br>Type: `string`<br>Default: `" - "`|
+|mealSortOrder      |The default sort order is breakfast (0), lunch (1), dinner (2), and lunch (3). You can change this sort order. For example, if you want dinner first: [2, 0, 1, 3]. Note: each number 0-3 must appear exactly once in the array.<br><br>Type: `array of int`| <br>Default: `[0, 1, 2, 3`]
 |updateInterval     |How often, in minutes, to query Paprika.<br><br>Type: `int`<br>Default: `60` minutes|
 |updateFadeSpeed    |How quickly to fade out and back in the module upon update.<br><br>Type: `int`<br>Default: `500`|
 
