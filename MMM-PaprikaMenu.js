@@ -12,6 +12,7 @@ Module.register("MMM-PaprikaMenu", {
         passwoord: "",
         weekStartsOnSunday: false,
         showPictures: true,
+        roundPictureCorners: false,
         dateFormat: "dddd",
         breakfastDisplay: "Breakfast",
         lunchDisplay: "Lunch",
@@ -35,13 +36,6 @@ Module.register("MMM-PaprikaMenu", {
         return "MMM-PaprikaMenu.njk";
     },
 
-    /*
-    Data object provided to the Nunjucks template. The template does not
-    do any data minipulation; the strings provided here are displayed as-is.
-    The only logic in the template are conditional blocks that determine if
-    a certain section should be displayed, and simple loops for the hourly
-    and daily forecast.
-    */
     getTemplateData: function () {
         return {
             phrases: {

@@ -30,6 +30,10 @@
   margin: 5px;
 }
 
+.MMM-PaprikaMenu .menu .img-cell > img.rounded {
+  border-radius: 10%;
+}
+
 .MMM-PaprikaMenu table.inner td {
   line-height: 24px;
   height: 28px;

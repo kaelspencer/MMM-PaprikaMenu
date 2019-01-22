@@ -10,7 +10,7 @@
         <td>
           <span class="img-cell">
             {% if config.showPictures and m.photo_url %}
-                <img src="{{ m.photo_url }}" />
+                <img src="{{ m.photo_url }}" {% if config.roundPictureCorners %}class="rounded"{% endif %}/>
             {% else %}
               &nbsp;
             {% endif %}
