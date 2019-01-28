@@ -9,7 +9,7 @@ Module.register("MMM-PaprikaMenu", {
 
     defaults: {
         email: "",
-        passwoord: "",
+        password: "",
         weekStartsOnSunday: false,
         fadePriorEntries: true,
         showPictures: true,
