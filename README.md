@@ -1,6 +1,8 @@
 # MMM-PaprikaMenu
 This is a module for [MagicMirror](https://github.com/MichMich/MagicMirror/). It displays your weekly menu from [Paprika](https://www.paprikaapp.com/).
 
+![Screen Shot](/MMM-PaprikaMenu-screenshot.png?raw=true "Screen Shot")
+
 # Installation
 1. Move to MagicMirror's `modules` directory and clone the repo with<br>
 `git clone https://github.com/kaelspencer/MMM-PaprikaMenu.git`
