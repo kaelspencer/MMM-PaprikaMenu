@@ -11,6 +11,7 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         password: "",
         weekStartsOnSunday: false,
+        showPriorDays: true,
         fadePriorEntries: true,
         showPictures: true,
         roundPictureCorners: false,
@@ -120,7 +121,25 @@ Module.register("MMM-PaprikaMenu", {
             });
         }
 
-        return formatted;
+        filtered = this.filterDaysAndEntries(formatted);
+        return filtered;
+    },
+
+    filterDaysAndEntries: function(sortedMenu) {
+        filtered = sortedMenu;
+
+        if (!this.config.showPriorDays) {
+            var today = moment().startOf('day');
+
+            filtered = [];
+            for (var m of sortedMenu) {
+                if (!moment(m.date, this.config.dateFormat).isBefore(today)) {
+                    filtered.push(m);
+                }
+            }
+        }
+
+        return filtered;
     },
 
     typeToMealDisplay: function(type) {

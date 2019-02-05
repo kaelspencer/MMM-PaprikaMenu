@@ -16,6 +16,7 @@ At a minimum, you need a Paprika cloud sync account. Provide that email and pass
 |email              |**REQUIRED**<br>The email/user account for Paprika<br><br>Type: *string*|
 |password           |**REQUIRED**<br>The password for your Paprika account<br><br>Type: *string*|
 |weekStartsOnSunday |The modules shows the current week's menu. If true, the first day of the week will be Sunday. If false, Monday.<br><br>Type: `bool`<br>Default: `false`|
+|showPriorDays      |Should previous days of this current week be display. If false, only today until the end of the week are shown.<br><br>Type: `bool`<br>Default: `true`|
 |fadePriorEntries   |Should entries from previous days in the current week be faded.<br><br>Type: `bool`<br>Default: `true`|
 |showPictures       |Show pictures corresponding to that days meal.<br><br>Type: `bool`<br>Default: `true`|
 |roundPictureCorners|Round the meal picture corners.<br><br>Type: `bool`<br>Default: `false`|
