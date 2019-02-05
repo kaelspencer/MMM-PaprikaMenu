@@ -11,6 +11,8 @@ Module.register("MMM-PaprikaMenu", {
         email: "",
         password: "",
         weekStartsOnSunday: false,
+        priorDayLimit: 7,
+        priorEntryLimit: 50,
         fadePriorEntries: true,
         showPictures: true,
         roundPictureCorners: false,
@@ -67,6 +69,16 @@ Module.register("MMM-PaprikaMenu", {
             return;
         }
 
+        if (this.config.priorDayLimit < 0) {
+            this.config.priorDayLimit = 0;
+            Log.warn("priorDayLimit should be 0+. Setting to 0.");
+        }
+
+        if (this.config.priorEntryLimit < 0) {
+            this.config.priorEntryLimit = 0;
+            Log.warn("priorEntryLimit should be 0+. Setting to 0.");
+        }
+
         var self = this;
         setInterval(function() {
             self.getData();
@@ -112,6 +124,7 @@ Module.register("MMM-PaprikaMenu", {
         for (var m of meals) {
             formatted.push({
                 name: m.name,
+                raw_date: m.date,
                 date: moment(m.date).format(this.config.dateFormat),
                 meal: this.typeToMealDisplay(m.type),
                 photo_url: m.photo_url,
@@ -120,7 +133,36 @@ Module.register("MMM-PaprikaMenu", {
             });
         }
 
-        return formatted;
+        filtered = this.filterDaysAndEntries(formatted);
+        return filtered;
+    },
+
+    filterDaysAndEntries: function(sortedMenu) {
+        var reversed = sortedMenu.reverse();
+        var filtered = [];
+        var today = moment().startOf('day');
+        var entriesBeforeTodayCount = 0;
+
+        for (var m of reversed) {
+            var days = moment(m.raw_date).diff(today, 'days');
+
+            // If days < 0, this is a previous entry. The config may limit how many of these we show.
+            if (days < 0) {
+                entriesBeforeTodayCount++;
+            }
+
+            // days is the number of days between today and this menu items date; a negative value for past items.
+            // Add it to our result set if it is 0+ (today or in the future), and if this.config.priorDayLimit + days is 0+.
+            // days >= 0 can just be rolled into the priorDayLimit check.
+            // Example: priorDayLimit: 3, menu two days ago -> days: -2, 3 + -2 = 1, add it to the result.
+            //
+            // Additionally, only show max this.config.priorEntryLimit.
+            if (this.config.priorDayLimit + days >= 0 && this.config.priorEntryLimit >= entriesBeforeTodayCount) {
+                filtered.push(m);
+            }
+        }
+
+        return filtered.reverse();
     },
 
     typeToMealDisplay: function(type) {

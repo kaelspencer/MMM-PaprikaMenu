@@ -149,12 +149,13 @@ module.exports = NodeHelper.create({
         meals = [];
         var startOfWeek = this.getFirstDayOfWeek(weekStartsOnSunday);
         var nextWeek = startOfWeek.clone().add(7, 'days');
+        var lastDayOfWeek = nextWeek.clone().subtract(1, 'days');
 
         console.log('MMM-PaprikaMenu: Week starts: ' + startOfWeek.format('YYYY-MM-DD') + ', next week starts: ' + nextWeek.format('YYYY-MM-DD'));
 
         raw.forEach(function(item) {
             var itemDate = moment(item.date);
-            if (!(itemDate.isBefore(startOfWeek) || itemDate.isAfter(nextWeek))) {
+            if (!(itemDate.isBefore(startOfWeek) || itemDate.isAfter(lastDayOfWeek))) {
                 meals.push(item);
             }
         });
