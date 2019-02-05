@@ -141,15 +141,23 @@ Module.register("MMM-PaprikaMenu", {
         var reversed = sortedMenu.reverse();
         var filtered = [];
         var today = moment().startOf('day');
+        var entriesBeforeTodayCount = 0;
 
         for (var m of reversed) {
             var days = moment(m.raw_date).diff(today, 'days');
+
+            // If days < 0, this is a previous entry. The config may limit how many of these we show.
+            if (days < 0) {
+                entriesBeforeTodayCount++;
+            }
 
             // days is the number of days between today and this menu items date; a negative value for past items.
             // Add it to our result set if it is 0+ (today or in the future), and if this.config.priorDayLimit + days is 0+.
             // days >= 0 can just be rolled into the priorDayLimit check.
             // Example: priorDayLimit: 3, menu two days ago -> days: -2, 3 + -2 = 1, add it to the result.
-            if (this.config.priorDayLimit + days >= 0) {
+            //
+            // Additionally, only show max this.config.priorEntryLimit.
+            if (this.config.priorDayLimit + days >= 0 && this.config.priorEntryLimit >= entriesBeforeTodayCount) {
                 filtered.push(m);
             }
         }
