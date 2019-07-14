@@ -13,8 +13,9 @@
   "author": "Kael Spencer",
   "license": "MIT",
   "dependencies": {
-    "moment": "^2.22.2",
-    "npm": "^6.4.1",
+    "lodash": ">=4.17.13",
+    "moment": "^2.24.0",
+    "npm": "^6.10.1",
     "paprika-api": "^1.0.3"
   }
 }
