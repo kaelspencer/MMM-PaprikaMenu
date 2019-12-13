@@ -15,7 +15,7 @@
   "dependencies": {
     "lodash": ">=4.17.13",
     "moment": "^2.24.0",
-    "npm": "^6.10.1",
+    "npm": "^6.13.4",
     "paprika-api": "^1.0.3"
   }
 }
